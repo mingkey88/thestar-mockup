@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Star — Where Every Moment Shines</title>
+  <link rel="icon" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #F5A623;
+      --gold-dark: #D4901E;
+      --dark: #1A1A1A;
+      --darker: #111111;
+      --light: #FAFAFA;
+      --gray: #888888;
+      --white: #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--darker);
+      color: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s, backdrop-filter 0.4s;
+    }
+
+    nav.scrolled {
+      background: rgba(17,17,17,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    nav .logo img {
+      height: 36px;
+      width: auto;
+    }
+
+    nav .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    nav .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.85;
+      transition: opacity 0.3s, color 0.3s;
+    }
+
+    nav .nav-links a:hover {
+      opacity: 1;
+      color: var(--gold);
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero video {
+      position: absolute;
+      top: 50%; left: 50%;
+      min-width: 100%; min-height: 100%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.3) 0%,
+        rgba(0,0,0,0.15) 40%,
+        rgba(0,0,0,0.5) 80%,
+        rgba(17,17,17,1) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+    }
+
+    .hero-content img {
+      height: 60px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 1s ease-out 0.3s both;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+      animation: fadeUp 1s ease-out 0.5s both;
+    }
+
+    .hero-content h1 span {
+      color: var(--gold);
+    }
+
+    .hero-content p {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: rgba(255,255,255,0.8);
+      max-width: 520px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+      animation: fadeUp 1s ease-out 0.7s both;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      gap: 1rem;
+      animation: fadeUp 1s ease-out 0.9s both;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 50px;
+      letter-spacing: 0.04em;
+      transition: all 0.35s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(245,166,35,0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.4);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      animation: bounce 2s infinite;
+    }
+
+    .scroll-indicator svg {
+      width: 28px;
+      height: 28px;
+      stroke: rgba(255,255,255,0.5);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 7rem 3rem;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+
+    .section-desc {
+      color: var(--gray);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .about-image {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .about-image:hover img {
+      transform: scale(1.03);
+    }
+
+    .about-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 2.5rem;
+    }
+
+    .stat h3 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--gold);
+    }
+
+    .stat p {
+      font-size: 0.85rem;
+      color: var(--gray);
+      margin-top: 0.25rem;
+    }
+
+    /* ── EXPERIENCES GRID ── */
+    .experiences {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .experiences-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .experiences-header .section-desc {
+      margin: 0 auto;
+    }
+
+    .exp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .exp-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      cursor: pointer;
+      group: true;
+    }
+
+    .exp-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .exp-card:hover img {
+      transform: scale(1.08);
+    }
+
+    .exp-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      transition: background 0.4s;
+    }
+
+    .exp-card:hover .exp-card-overlay {
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.1) 60%);
+    }
+
+    .exp-card-overlay h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .exp-card-overlay p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+    }
+
+    .exp-card-overlay .card-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--gold);
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 0.75rem;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.35s ease;
+    }
+
+    .exp-card:hover .card-arrow {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── WHATS ON / EVENTS ── */
+    .whats-on {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .whats-on-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+    }
+
+    .event-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .event-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      transition: border-color 0.35s, transform 0.35s;
+      cursor: pointer;
+    }
+
+    .event-card:hover {
+      border-color: rgba(245,166,35,0.3);
+      transform: translateY(-4px);
+    }
+
+    .event-card-image {
+      width: 200px;
+      min-height: 200px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .event-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .event-card:hover .event-card-image img {
+      transform: scale(1.05);
+    }
+
+    .event-card-body {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .event-date {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .event-card-body h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .event-card-body p {
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    /* ── PROMOTIONS MARQUEE ── */
+    .promo-section {
+      background: var(--gold);
+      padding: 1.25rem 0;
+      overflow: hidden;
+    }
+
+    .marquee {
+      display: flex;
+      animation: marquee 25s linear infinite;
+      white-space: nowrap;
+    }
+
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 2rem;
+      padding: 0 2rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--dark);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .marquee-item .dot {
+      width: 6px; height: 6px;
+      background: var(--dark);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── DINING ── */
+    .dining {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .dining-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .dining-images .img-wrap {
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .dining-images .img-wrap:first-child {
+      grid-column: 1 / -1;
+      aspect-ratio: 16/9;
+    }
+
+    .dining-images .img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .dining-images .img-wrap:hover img {
+      transform: scale(1.03);
+    }
+
+    .dining-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .dining-tag {
+      padding: 0.5rem 1.25rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.8);
+      transition: all 0.3s;
+    }
+
+    .dining-tag:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ── VENUE / CTA ── */
+    .venue-cta {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(245,166,35,0.12) 0%, rgba(245,166,35,0.03) 100%);
+      border: 1px solid rgba(245,166,35,0.15);
+      border-radius: 24px;
+      padding: 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .venue-cta-image {
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .venue-cta-image img {
+      width: 100%;
+      display: block;
+      border-radius: 16px;
+    }
+
+    .venue-cta-content h2 {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+
+    .venue-cta-content p {
+      color: var(--gray);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 4rem 3rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .footer-brand img {
+      height: 32px;
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand p {
+      color: var(--gray);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      max-width: 280px;
+    }
+
+    .footer-col h4 {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.25rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-col a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .footer-col a:hover {
+      color: var(--gold);
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 3rem auto 0;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-bottom p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .footer-socials a {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .footer-socials a:hover {
+      border-color: var(--gold);
+      background: rgba(245,166,35,0.1);
+    }
+
+    .footer-socials svg {
+      width: 16px; height: 16px;
+      fill: var(--gray);
+      transition: fill 0.3s;
+    }
+
+    .footer-socials a:hover svg {
+      fill: var(--gold);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 968px) {
+      nav { padding: 1rem 1.5rem; }
+      section { padding: 5rem 1.5rem; }
+
+      .nav-links { display: none; }
+      .nav-toggle { display: block; }
+
+      .about,
+      .dining {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .exp-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .exp-card { aspect-ratio: 16/9; }
+
+      .event-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .event-card {
+        flex-direction: column;
+      }
+
+      .event-card-image {
+        width: 100%;
+        min-height: 180px;
+        height: 180px;
+      }
+
+      .venue-cta {
+        grid-template-columns: 1fr;
+        padding: 2rem;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-content img { height: 44px; }
+      .about-stats { gap: 2rem; }
+      .stat h3 { font-size: 1.5rem; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .hero-cta { flex-direction: column; gap: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#" class="logo">
+      <img src="LogoYellow.png" alt="The Star">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experiences">Experiences</a></li>
+      <li><a href="#events">What's On</a></li>
+      <li><a href="#dining">Dine & Shop</a></li>
+      <li><a href="#venue">Venues</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" onclick="this.classList.toggle('active'); document.querySelector('.nav-links').classList.toggle('show')">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <video autoplay muted loop playsinline>
+      <source src="TheStar-Hero_Banner.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <img src="LogoYellow.png" alt="The Star">
+      <h1>Where Every<br>Moment <span>Shines</span></h1>
+      <p>Singapore's iconic lifestyle destination for world-class entertainment, dining, and unforgettable experiences.</p>
+      <div class="hero-cta">
+        <a href="#experiences" class="btn btn-primary">Explore Now</a>
+        <a href="#events" class="btn btn-outline">What's On</a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about reveal">
+      <div class="about-image">
+        <img src="Building2.jpg" alt="The Star building at night">
+      </div>
+      <div>
+        <p class="section-label">Welcome to The Star</p>
+        <h2 class="section-title">A Destination<br>Like No Other</h2>
+        <p class="section-desc">The Star is more than a venue — it's the beating heart of entertainment and lifestyle in Singapore. From spectacular live performances to gourmet dining and vibrant retail, every visit is designed to inspire and delight.</p>
+        <div class="about-stats">
+          <div class="stat">
+            <h3>5,000</h3>
+            <p>Seat Performing<br>Arts Centre</p>
+          </div>
+          <div class="stat">
+            <h3>50+</h3>
+            <p>Dining & Retail<br>Experiences</p>
+          </div>
+          <div class="stat">
+            <h3>200+</h3>
+            <p>Events<br>Annually</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCES -->
+  <section id="experiences" style="background: var(--dark);">
+    <div class="experiences">
+      <div class="experiences-header reveal">
+        <p class="section-label">Discover</p>
+        <h2 class="section-title">Experiences Curated For You</h2>
+        <p class="section-desc">From electrifying concerts to relaxed dining with friends — find your kind of moment at The Star.</p>
+      </div>
+      <div class="exp-grid reveal">
+        <div class="exp-card">
+          <img src="Yuuri 27 Sep.jpg" alt="Live performances at The Star">
+          <div class="exp-card-overlay">
+            <h3>Live Entertainment</h3>
+            <p>World-class concerts, musicals, and performances on our iconic stage.</p>
+            <span class="card-arrow">Discover more &rarr;</span>
+          </div>
+        </div>
+        <div class="exp-card">
+          <img src="freepik__two-adult-asian-women-in-their-late-20s-to-early-3__43863.png" alt="Dining and lifestyle">
+          <div class="exp-card-overlay">
+            <h3>Dine & Socialise</h3>
+            <p>A curated mix of cafes, restaurants, and lifestyle brands to explore.</p>
+            <span class="card-arrow">Discover more &rarr;</span>
+          </div>
+        </div>
+        <div class="exp-card">
+          <img src="The Star Gallery Seminar 1.jpg" alt="Events and conferences">
+          <div class="exp-card-overlay">
+            <h3>Events & Conferences</h3>
+            <p>Versatile spaces for corporate events, seminars, and private functions.</p>
+            <span class="card-arrow">Discover more &rarr;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMOTIONS MARQUEE -->
+  <div class="promo-section">
+    <div class="marquee">
+      <div class="marquee-item"><span class="dot"></span> New Dining Experiences Now Open</div>
+      <div class="marquee-item"><span class="dot"></span> Upcoming: Live Concerts This April</div>
+      <div class="marquee-item"><span class="dot"></span> Exclusive Member Deals Available</div>
+      <div class="marquee-item"><span class="dot"></span> Book Your Corporate Event Today</div>
+      <div class="marquee-item"><span class="dot"></span> New Dining Experiences Now Open</div>
+      <div class="marquee-item"><span class="dot"></span> Upcoming: Live Concerts This April</div>
+      <div class="marquee-item"><span class="dot"></span> Exclusive Member Deals Available</div>
+      <div class="marquee-item"><span class="dot"></span> Book Your Corporate Event Today</div>
+    </div>
+  </div>
+
+  <!-- WHAT'S ON -->
+  <section id="events">
+    <div class="whats-on">
+      <div class="whats-on-header reveal">
+        <div>
+          <p class="section-label">What's On</p>
+          <h2 class="section-title">Happening at The Star</h2>
+        </div>
+        <a href="#" class="btn btn-outline" style="flex-shrink:0;">View All Events</a>
+      </div>
+      <div class="event-cards reveal">
+        <div class="event-card">
+          <div class="event-card-image">
+            <img src="Yuuri 27 Sep.jpg" alt="Yuuri Live">
+          </div>
+          <div class="event-card-body">
+            <p class="event-date">27 Sep 2026</p>
+            <h3>Yuuri Live in Singapore</h3>
+            <p>Catch the Japanese singer-songwriter perform his biggest hits live at The Star Theatre.</p>
+          </div>
+        </div>
+        <div class="event-card">
+          <div class="event-card-image">
+            <img src="The Star Gallery Seminar 1.jpg" alt="Seminar">
+          </div>
+          <div class="event-card-body">
+            <p class="event-date">Coming Soon</p>
+            <h3>Innovation Summit 2026</h3>
+            <p>Asia's leading tech and innovation conference returns to The Star Gallery.</p>
+          </div>
+        </div>
+        <div class="event-card">
+          <div class="event-card-image">
+            <img src="Screenshot 2026-03-19 145229.png" alt="Promotion">
+          </div>
+          <div class="event-card-body">
+            <p class="event-date">Limited Time</p>
+            <h3>Members Annual Sale</h3>
+            <p>Exclusive deals across dining partners. Sign up for membership to enjoy special perks.</p>
+          </div>
+        </div>
+        <div class="event-card">
+          <div class="event-card-image">
+            <img src="Screenshot 2026-03-19 150316.png" alt="Carl's Jr celebration">
+          </div>
+          <div class="event-card-body">
+            <p class="event-date">Celebrate</p>
+            <h3>Carl's Jr. 20th Anniversary</h3>
+            <p>Free meals for the first 20 customers daily — celebrate two decades of bold bites.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DINING -->
+  <section id="dining" style="background: var(--dark);">
+    <div class="dining reveal">
+      <div>
+        <p class="section-label">Dine & Shop</p>
+        <h2 class="section-title">Savour Every Flavour</h2>
+        <p class="section-desc">From artisanal coffee to international cuisine, The Star brings together Singapore's most loved dining brands under one roof.</p>
+        <div class="dining-list">
+          <span class="dining-tag">Awfully Chocolate</span>
+          <span class="dining-tag">Carl's Jr.</span>
+          <span class="dining-tag">CoCo ICHIBANYA</span>
+          <span class="dining-tag">Cafes & Bistros</span>
+          <span class="dining-tag">Asian Favourites</span>
+          <span class="dining-tag">Quick Bites</span>
+          <span class="dining-tag">Desserts & Bakery</span>
+          <span class="dining-tag">Lifestyle & Retail</span>
+        </div>
+        <a href="#" class="btn btn-primary" style="margin-top: 2rem;">Explore All Dining</a>
+      </div>
+      <div class="dining-images">
+        <div class="img-wrap">
+          <img src="freepik__two-adult-asian-women-in-their-late-20s-to-early-3__43863.png" alt="Dining at The Star">
+        </div>
+        <div class="img-wrap" style="aspect-ratio:1;">
+          <img src="Screenshot 2026-03-19 145944.png" alt="Drinks">
+        </div>
+        <div class="img-wrap" style="aspect-ratio:1;">
+          <img src="Screenshot 2026-03-19 163751.png" alt="Food">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENUE CTA -->
+  <section id="venue">
+    <div class="venue-cta reveal">
+      <div class="venue-cta-image">
+        <img src="The Star Gallery Seminar 1.jpg" alt="The Star Gallery">
+      </div>
+      <div class="venue-cta-content">
+        <p class="section-label">Host Your Event</p>
+        <h2>World-Class Venues For Every Occasion</h2>
+        <p>Whether it's an intimate gathering or a grand gala, The Star offers versatile spaces equipped with state-of-the-art facilities to make your event truly memorable.</p>
+        <a href="#contact" class="btn btn-primary">Enquire Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="contact">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="LogoYellow.png" alt="The Star">
+        <p>Singapore's premier lifestyle and entertainment destination. Where every moment shines.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#experiences">Experiences</a></li>
+          <li><a href="#events">What's On</a></li>
+          <li><a href="#dining">Dine & Shop</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Visit</h4>
+        <ul>
+          <li><a href="#">Getting Here</a></li>
+          <li><a href="#">Parking</a></li>
+          <li><a href="#">Opening Hours</a></li>
+          <li><a href="#">Accessibility</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Media</a></li>
+          <li><a href="#">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 The Star. All rights reserved.</p>
+      <div class="footer-socials">
+        <a href="#" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+        </a>
+        <a href="#" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
