@@ -160,7 +160,8 @@
     padding-top: 0;
   }
 
-  .hero video {
+  .hero video,
+  .hero .hero-fallback {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -170,6 +171,16 @@
     width: auto;
     height: auto;
     object-fit: cover;
+  }
+
+  .hero .hero-fallback {
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .hero video {
+    z-index: 1;
   }
 
   @keyframes fadeUp {
@@ -967,7 +978,8 @@
 
 <!-- ═══════════ HERO ═══════════ -->
 <section class="hero">
-  <video autoplay muted loop playsinline>
+  <img class="hero-fallback" src="../Building2.jpg" alt="The Star">
+  <video autoplay muted playsinline id="heroVideo">
     <source src="../TheStar-Hero_Banner.mp4" type="video/mp4">
   </video>
 </section>
@@ -1020,16 +1032,16 @@
   </div>
 
   <div class="promo-grid">
-    <div class="promo-card">
+    <div class="promo-card scroll-reveal">
       <img src="../Screenshot 2026-03-19 145229.png" alt="Members Annual Sale">
     </div>
-    <div class="promo-card">
+    <div class="promo-card scroll-reveal">
       <img src="../Screenshot 2026-03-19 163751.png" alt="Curry Cravings, Seafood Satisfied">
     </div>
-    <div class="promo-card">
+    <div class="promo-card scroll-reveal">
       <img src="../Screenshot 2026-03-19 145944.png" alt="Dine Out & Save">
     </div>
-    <div class="promo-card">
+    <div class="promo-card scroll-reveal">
       <img src="../Screenshot 2026-03-19 150316.png" alt="Carl's Jr Celebrate 20 Years">
     </div>
   </div>
@@ -1231,6 +1243,16 @@
       link.classList.add('active');
     });
   });
+
+  // Hero video — play once at 1.5x then fade to Building2.jpg
+  const heroVideo = document.getElementById('heroVideo');
+  if (heroVideo) {
+    heroVideo.playbackRate = 2;
+    heroVideo.addEventListener('ended', () => {
+      heroVideo.style.transition = 'opacity 0.75s ease-in';
+      heroVideo.style.opacity = '0';
+    });
+  }
 
   // Hamburger menu toggle
   function toggleMenu() {
