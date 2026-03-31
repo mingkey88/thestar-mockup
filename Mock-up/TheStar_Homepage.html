@@ -117,14 +117,16 @@
     color: #333;
     background: rgba(255,255,255,0.3);
     outline: none;
-    transition: var(--transition);
+    transition: width 0.35s ease, background 0.3s ease;
   }
 
   .search-input::placeholder {
     color: #aaa;
   }
 
+  .nav-search:hover .search-input,
   .search-input:focus {
+    width: 220px;
     background: rgba(255,255,255,0.45);
   }
 
@@ -180,6 +182,7 @@
 
   .hero video {
     z-index: 1;
+    transition: opacity 1.2s ease;
   }
 
   @keyframes fadeUp {
@@ -206,6 +209,13 @@
     line-height: 1.3;
     margin-bottom: 20px;
     color: #342c2d;
+    animation: none;
+  }
+
+  @keyframes shimmer-color {
+    0%, 100% { color: #342c2d; }
+    40% { color: var(--orange); }
+    60% { color: var(--orange); }
   }
 
   .tagline-sub {
@@ -542,7 +552,7 @@
      ACCESS / GETTING HERE
   ═══════════════════════════════════ */
   .access-section {
-    padding: 80px 0 80px 48px;
+    padding: 120px 0 120px 48px;
     position: relative;
     background: var(--white);
     overflow: hidden;
@@ -574,7 +584,7 @@
   }
 
   .access-left {
-    margin-left: 50px;
+    margin-left: 100px;
   }
 
   .access-left h2 {
@@ -1011,8 +1021,8 @@
 
 <!-- ═══════════ TAGLINE ═══════════ -->
 <section class="tagline-section">
-  <h1>Where Every Moment Takes The Stage</h1>
-  <p class="tagline-sub">A cultural beacon where world-class performing arts, curated retail, and versatile event spaces converge to inspire community, connection, and discovery.</p>
+  <h1 class="scroll-reveal">Where Every Moment Takes The Stage</h1>
+  <p class="tagline-sub scroll-reveal">A cultural beacon where world-class performing arts, curated retail, and versatile event spaces converge to inspire community, connection, and discovery.</p>
 </section>
 
 <!-- ═══════════ CATEGORY COLLAGE ═══════════ -->
@@ -1063,65 +1073,64 @@
       <h2>Access</h2>
 
       <div class="transport-tabs">
-        <button class="transport-tab active" data-mode="car" onclick="setTransport(this)">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="8" width="20" height="8" rx="2"/><circle cx="6" cy="16" r="2"/><circle cx="18" cy="16" r="2"/><path d="M4 8L6 4h12l2 4"/></svg>
-          CAR
-        </button>
-        <button class="transport-tab" data-mode="taxi" onclick="setTransport(this)">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="8" width="20" height="8" rx="2"/><circle cx="6" cy="16" r="2"/><circle cx="18" cy="16" r="2"/><path d="M4 8L6 4h12l2 4"/><path d="M9 4V2h6v2"/></svg>
-          TAXI
+        <button class="transport-tab active" data-mode="train" onclick="setTransport(this)">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="16" rx="4"/><circle cx="8" cy="14" r="1"/><circle cx="16" cy="14" r="1"/><line x1="5" y1="9" x2="19" y2="9"/><path d="M7 18l-2 3M17 18l2 3"/></svg>
+          TRAIN
         </button>
         <button class="transport-tab" data-mode="bus" onclick="setTransport(this)">
           <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="3" width="16" height="15" rx="3"/><circle cx="8" cy="18" r="2"/><circle cx="16" cy="18" r="2"/><line x1="4" y1="11" x2="20" y2="11"/></svg>
           BUS
         </button>
-        <button class="transport-tab" data-mode="mrt" onclick="setTransport(this)">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="16" rx="4"/><circle cx="8" cy="14" r="1"/><circle cx="16" cy="14" r="1"/><line x1="5" y1="9" x2="19" y2="9"/><path d="M7 18l-2 3M17 18l2 3"/></svg>
-          MRT
+        <button class="transport-tab" data-mode="taxi" onclick="setTransport(this)">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="8" width="20" height="8" rx="2"/><circle cx="6" cy="16" r="2"/><circle cx="18" cy="16" r="2"/><path d="M4 8L6 4h12l2 4"/><path d="M9 4V2h6v2"/></svg>
+          TAXI
+        </button>
+        <button class="transport-tab" data-mode="car" onclick="setTransport(this)">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="8" width="20" height="8" rx="2"/><circle cx="6" cy="16" r="2"/><circle cx="18" cy="16" r="2"/><path d="M4 8L6 4h12l2 4"/></svg>
+          CAR
         </button>
       </div>
 
-      <div class="transport-info" data-mode="car">
-        <p>Enter via Vista Exchange Green or Rochester Drive</p>
+      <div class="transport-info" data-mode="train">
+        <p>Buona Vista MRT Station</p>
         <ul>
-          <li>Park at Star Vista carpark or alternative carparks nearby</li>
-          <li><span class="highlight">Drop off at taxi</span> stand opposite</li>
-          <li>Rochester Mall <strong>(Taxi stand F60)</strong></li>
-        </ul>
-      </div>
-
-      <div class="transport-info" data-mode="taxi" style="display:none;">
-        <p>Drop off at the taxi stand opposite Rochester Mall</p>
-        <ul>
-          <li>Taxi stand <strong>F60</strong> along Rochester Drive</li>
-          <li>Grab / Gojek pick-up point at B1 lobby entrance</li>
-          <li>Estimated fare from Orchard: ~$12–$18</li>
+          <li>Exit A <strong>(East-West Line)</strong></li>
+          <li>Exit C <strong>(Circle Line)</strong></li>
         </ul>
       </div>
 
       <div class="transport-info" data-mode="bus" style="display:none;">
-        <p>Several bus services stop near The Star</p>
+        <p>North Buona Vista Road</p>
         <ul>
-          <li>Bus stop <strong>B11199</strong> (Commonwealth Ave West) — Services 14, 74, 91, 92, 191</li>
-          <li>Bus stop <strong>B11191</strong> (opp Star Vista) — Services 14, 74, 92</li>
-          <li>Bus stop <strong>B11261</strong> (Rochester Drive) — Services 33, 100</li>
+          <li>Bus Services: <strong>74, 91, 92, 95, 191, 196, 198, 200</strong></li>
+        </ul>
+        <p style="margin-top: 12px;">Commonwealth Avenue West</p>
+        <ul>
+          <li>Bus Services: <strong>105, 106, 147, 185, NR5, NR8</strong></li>
         </ul>
       </div>
 
-      <div class="transport-info" data-mode="mrt" style="display:none;">
-        <p>The Star is directly connected to Buona Vista MRT station</p>
+      <div class="transport-info" data-mode="taxi" style="display:none;">
+        <p>Enter via Vista Exchange Green or Rochester Drive</p>
         <ul>
-          <li><strong>East-West Line (EW21)</strong> — Exit B, 2 min sheltered walk</li>
-          <li><strong>Circle Line (CC22)</strong> — Exit B, 2 min sheltered walk</li>
-          <li>Follow signs to "Star Vista / The Star" upon exiting</li>
+          <li>Drop off at taxi stand opposite Rochester Mall</li>
+          <li>Taxi stand <strong>F60</strong></li>
         </ul>
       </div>
 
-      <div class="carpark-counter" data-mode="car">
-        <div class="carpark-icon">P</div>
+      <div class="carpark-counter" data-mode="train">
+        <div class="carpark-icon">M</div>
         <div class="carpark-text">
-          <strong>579 lots</strong>
-          available at 4:30 pm
+          <strong>Buona Vista MRT</strong>
+          directly connected
+        </div>
+      </div>
+
+      <div class="carpark-counter" data-mode="bus" style="display:none;">
+        <div class="carpark-icon">B</div>
+        <div class="carpark-text">
+          <strong>2 bus stops</strong>
+          within walking distance
         </div>
       </div>
 
@@ -1129,23 +1138,22 @@
         <div class="carpark-icon">T</div>
         <div class="carpark-text">
           <strong>Taxi Stand F60</strong>
-          avg. wait ~3 mins
+          opp Rochester Mall
         </div>
       </div>
 
-      <div class="carpark-counter" data-mode="bus" style="display:none;">
-        <div class="carpark-icon">B</div>
-        <div class="carpark-text">
-          <strong>3 bus stops</strong>
-          within 5 min walk
-        </div>
+      <div class="transport-info" data-mode="car" style="display:none;">
+        <p>Enter via Vista Exchange Green or Rochester Drive</p>
+        <ul>
+          <li>Park at Star Vista carpark or alternative carparks nearby</li>
+        </ul>
       </div>
 
-      <div class="carpark-counter" data-mode="mrt" style="display:none;">
-        <div class="carpark-icon">M</div>
+      <div class="carpark-counter" data-mode="car" style="display:none;">
+        <div class="carpark-icon">P</div>
         <div class="carpark-text">
-          <strong>Buona Vista MRT</strong>
-          2 min sheltered walk
+          <strong>579 lots</strong>
+          available at 4:30 pm
         </div>
       </div>
     </div>
@@ -1251,10 +1259,22 @@
 
   // Hero video — play once at 2x then show Building2.jpg
   const heroVideo = document.getElementById('heroVideo');
+  const taglineH1 = document.querySelector('.tagline-section h1');
   if (heroVideo) {
     heroVideo.playbackRate = 2;
+    heroVideo.addEventListener('loadedmetadata', () => {
+      // Two shimmer cycles that end exactly when the video ends
+      const videoDuration = heroVideo.duration / heroVideo.playbackRate;
+      const cycleDuration = videoDuration / 2;
+      if (taglineH1) {
+        taglineH1.style.animationDuration = cycleDuration + 's';
+        taglineH1.style.animationIterationCount = '2';
+        taglineH1.style.animationFillMode = 'forwards';
+        taglineH1.style.animation = 'shimmer-color ' + cycleDuration + 's ease-in-out 2 forwards';
+      }
+    });
     heroVideo.addEventListener('ended', () => {
-      heroVideo.style.display = 'none';
+      heroVideo.style.opacity = '0';
     });
   }
 
