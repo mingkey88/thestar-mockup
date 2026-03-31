@@ -584,7 +584,7 @@
   }
 
   .access-left {
-    margin-left: 100px;
+    margin-left: 75px;
   }
 
   .access-left h2 {
@@ -969,9 +969,54 @@
   .fade-in-2 { animation-delay: 0.2s; }
   .fade-in-3 { animation-delay: 0.3s; }
   .fade-in-4 { animation-delay: 0.4s; }
+
+  /* ═══════════════════════════════════
+     ENTRY SPLASH
+  ═══════════════════════════════════ */
+  .entry-splash {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.6s ease;
+  }
+
+  .entry-splash.fade-out {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .entry-splash img {
+    height: 60px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .entry-splash span {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
 </style>
 </head>
 <body>
+
+<!-- ═══════════ ENTRY SPLASH ═══════════ -->
+<div class="entry-splash" id="entrySplash">
+  <img src="../TheStar_WebRefresh-03.svg" alt="The Star">
+  <span>Tap to enter</span>
+</div>
 
 <!-- ═══════════ HEADER ═══════════ -->
 <header>
@@ -1010,6 +1055,9 @@
   <a href="#book" onclick="toggleMenu()">Book</a>
   <a href="#visit" onclick="toggleMenu()">Visit</a>
 </div>
+
+<!-- Background Music -->
+<audio id="bgMusic" preload="auto" src="../TheStar_Mock_BGM.mp3"></audio>
 
 <!-- ═══════════ HERO ═══════════ -->
 <section class="hero">
@@ -1260,21 +1308,65 @@
   // Hero video — play once at 2x then show Building2.jpg
   const heroVideo = document.getElementById('heroVideo');
   const taglineH1 = document.querySelector('.tagline-section h1');
+  const bgMusic = document.getElementById('bgMusic');
+
   if (heroVideo) {
-    heroVideo.playbackRate = 2;
+    heroVideo.playbackRate = 1;
     heroVideo.addEventListener('loadedmetadata', () => {
       // Two shimmer cycles that end exactly when the video ends
       const videoDuration = heroVideo.duration / heroVideo.playbackRate;
       const cycleDuration = videoDuration / 2;
       if (taglineH1) {
-        taglineH1.style.animationDuration = cycleDuration + 's';
-        taglineH1.style.animationIterationCount = '2';
-        taglineH1.style.animationFillMode = 'forwards';
         taglineH1.style.animation = 'shimmer-color ' + cycleDuration + 's ease-in-out 2 forwards';
       }
     });
     heroVideo.addEventListener('ended', () => {
       heroVideo.style.opacity = '0';
+    });
+  }
+
+  // Entry splash — triggers music + video on tap
+  const splash = document.getElementById('entrySplash');
+  if (splash) {
+    splash.addEventListener('click', () => {
+      // Start music
+      if (bgMusic) {
+        bgMusic.volume = 0.8;
+        bgMusic.currentTime = 0;
+        bgMusic.play().then(() => {
+          if (heroVideo) {
+            const videoDur = heroVideo.duration / heroVideo.playbackRate;
+            const fadeStart = 9;
+            const fadeDuration = Math.max(videoDur - fadeStart, 3);
+            const fadeSteps = 40;
+            const fadeInterval = (fadeDuration * 1000) / fadeSteps;
+            const volumeStep = 0.8 / fadeSteps;
+
+            setTimeout(() => {
+              let step = 0;
+              const fader = setInterval(() => {
+                step++;
+                bgMusic.volume = Math.max(0, 0.8 - (volumeStep * step));
+                if (step >= fadeSteps) {
+                  clearInterval(fader);
+                  bgMusic.pause();
+                }
+              }, fadeInterval);
+            }, fadeStart * 1000);
+          }
+        }).catch((e) => { console.log('Audio play failed:', e); });
+      }
+
+      // Restart video from beginning so it syncs with the music
+      if (heroVideo) {
+        heroVideo.currentTime = 0;
+        heroVideo.style.opacity = '1';
+        heroVideo.play();
+      }
+
+      // Fade out splash
+      splash.classList.add('fade-out');
+      setTimeout(() => splash.remove(), 600);
     });
   }
 
