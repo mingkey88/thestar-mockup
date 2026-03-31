@@ -919,6 +919,16 @@
     display: flex;
   }
 
+  .mobile-nav-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+
   .mobile-nav a {
     text-decoration: none;
     color: #333;
@@ -1085,10 +1095,14 @@
 
 <!-- Mobile Nav Overlay -->
 <div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" aria-label="Close menu" onclick="toggleMenu()">
+    <svg width="28" height="28" fill="none" stroke="#333" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="22" y2="22"/><line x1="22" y1="6" x2="6" y2="22"/></svg>
+  </button>
   <a href="#shop" onclick="toggleMenu()">Shop</a>
   <a href="#dine" onclick="toggleMenu()">Dine</a>
   <a href="#watch" onclick="toggleMenu()">Watch</a>
   <a href="#book" onclick="toggleMenu()">Book</a>
+  <a href="#deals" onclick="toggleMenu()">Deals</a>
   <a href="#visit" onclick="toggleMenu()">Visit</a>
 </div>
 
