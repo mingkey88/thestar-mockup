@@ -45,7 +45,7 @@
     top: 0; left: 0; right: 0;
     z-index: 100;
     padding: 0 40px;
-    height: 72px;
+    height: 88px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -63,7 +63,7 @@
   }
 
   .logo img {
-    height: 40px;
+    height: 52px;
     width: auto;
   }
 
@@ -74,18 +74,18 @@
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border-radius: 40px;
-    padding: 4px 4px 4px 8px;
+    padding: 6px 6px 6px 12px;
     border: 1px solid rgba(255,255,255,0.4);
   }
 
   .nav-bar a {
     text-decoration: none;
     color: #333;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 600;
     letter-spacing: 1.2px;
     text-transform: uppercase;
-    padding: 8px 22px;
+    padding: 10px 26px;
     border-radius: 30px;
     transition: var(--transition);
     white-space: nowrap;
@@ -107,8 +107,8 @@
   }
 
   .search-input {
-    height: 34px;
-    width: 140px;
+    height: 38px;
+    width: 150px;
     border: none;
     border-radius: 20px 0 0 20px;
     padding: 0 14px;
@@ -126,13 +126,13 @@
 
   .nav-search:hover .search-input,
   .search-input:focus {
-    width: 220px;
+    width: 240px;
     background: rgba(255,255,255,0.45);
   }
 
   .search-btn {
-    width: 38px;
-    height: 34px;
+    width: 42px;
+    height: 38px;
     border-radius: 0 20px 20px 0;
     border: none;
     background: var(--orange);
@@ -154,8 +154,8 @@
   .hero {
     position: relative;
     width: 100%;
-    height: 75vh;
-    min-height: 500px;
+    height: 100vh;
+    min-height: 600px;
     overflow: hidden;
     margin-top: 0;
     padding-top: 0;
@@ -638,7 +638,7 @@
   }
 
   .transport-info p {
-    font-size: 15px;
+    font-size: 18px;
     color: #333;
     line-height: 1.6;
     margin-bottom: 12px;
@@ -652,7 +652,7 @@
   }
 
   .transport-info li {
-    font-size: 14px;
+    font-size: 17px;
     color: #444;
     font-weight: 400;
     padding-left: 18px;
@@ -1125,29 +1125,38 @@
       <h2>Access</h2>
 
       <div class="transport-tabs">
-        <button class="transport-tab active" data-mode="train" onclick="setTransport(this)">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="16" rx="4"/><circle cx="8" cy="14" r="1"/><circle cx="16" cy="14" r="1"/><line x1="5" y1="9" x2="19" y2="9"/><path d="M7 18l-2 3M17 18l2 3"/></svg>
-          TRAIN
-        </button>
-        <button class="transport-tab" data-mode="bus" onclick="setTransport(this)">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="3" width="16" height="15" rx="3"/><circle cx="8" cy="18" r="2"/><circle cx="16" cy="18" r="2"/><line x1="4" y1="11" x2="20" y2="11"/></svg>
-          BUS
+        <button class="transport-tab active" data-mode="car" onclick="setTransport(this)">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="8" width="20" height="8" rx="2"/><circle cx="6" cy="16" r="2"/><circle cx="18" cy="16" r="2"/><path d="M4 8L6 4h12l2 4"/></svg>
+          CAR
         </button>
         <button class="transport-tab" data-mode="taxi" onclick="setTransport(this)">
           <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="8" width="20" height="8" rx="2"/><circle cx="6" cy="16" r="2"/><circle cx="18" cy="16" r="2"/><path d="M4 8L6 4h12l2 4"/><path d="M9 4V2h6v2"/></svg>
           TAXI
         </button>
-        <button class="transport-tab" data-mode="car" onclick="setTransport(this)">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="8" width="20" height="8" rx="2"/><circle cx="6" cy="16" r="2"/><circle cx="18" cy="16" r="2"/><path d="M4 8L6 4h12l2 4"/></svg>
-          CAR
+        <button class="transport-tab" data-mode="bus" onclick="setTransport(this)">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="3" width="16" height="15" rx="3"/><circle cx="8" cy="18" r="2"/><circle cx="16" cy="18" r="2"/><line x1="4" y1="11" x2="20" y2="11"/></svg>
+          BUS
+        </button>
+        <button class="transport-tab" data-mode="mrt" onclick="setTransport(this)">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="16" rx="4"/><circle cx="8" cy="14" r="1"/><circle cx="16" cy="14" r="1"/><line x1="5" y1="9" x2="19" y2="9"/><path d="M7 18l-2 3M17 18l2 3"/></svg>
+          MRT
         </button>
       </div>
 
-      <div class="transport-info" data-mode="train">
-        <p>Buona Vista MRT Station</p>
+      <div class="transport-info" data-mode="car">
+        <p>Enter via Vista Exchange Green or Rochester Drive</p>
         <ul>
-          <li>Exit A <strong>(East-West Line)</strong></li>
-          <li>Exit C <strong>(Circle Line)</strong></li>
+          <li>Park at Star Vista carpark or alternative carparks nearby</li>
+          <li>Drop off at taxi stand opposite</li>
+          <li>Rochester Mall <strong>(Taxi stand F60)</strong></li>
+        </ul>
+      </div>
+
+      <div class="transport-info" data-mode="taxi" style="display:none;">
+        <p>Enter via Vista Exchange Green or Rochester Drive</p>
+        <ul>
+          <li>Drop off at taxi stand opposite Rochester Mall</li>
+          <li>Taxi stand <strong>F60</strong></li>
         </ul>
       </div>
 
@@ -1162,27 +1171,19 @@
         </ul>
       </div>
 
-      <div class="transport-info" data-mode="taxi" style="display:none;">
-        <p>Enter via Vista Exchange Green or Rochester Drive</p>
+      <div class="transport-info" data-mode="mrt" style="display:none;">
+        <p>Buona Vista MRT Station</p>
         <ul>
-          <li>Drop off at taxi stand opposite Rochester Mall</li>
-          <li>Taxi stand <strong>F60</strong></li>
+          <li>Exit A <strong>(East-West Line)</strong></li>
+          <li>Exit C <strong>(Circle Line)</strong></li>
         </ul>
       </div>
 
-      <div class="carpark-counter" data-mode="train">
-        <div class="carpark-icon">M</div>
+      <div class="carpark-counter" data-mode="car">
+        <div class="carpark-icon" style="background: #2563eb;">P</div>
         <div class="carpark-text">
-          <strong>Buona Vista MRT</strong>
-          directly connected
-        </div>
-      </div>
-
-      <div class="carpark-counter" data-mode="bus" style="display:none;">
-        <div class="carpark-icon">B</div>
-        <div class="carpark-text">
-          <strong>2 bus stops</strong>
-          within walking distance
+          <strong>579 lots</strong>
+          available at 4:30 pm
         </div>
       </div>
 
@@ -1194,18 +1195,19 @@
         </div>
       </div>
 
-      <div class="transport-info" data-mode="car" style="display:none;">
-        <p>Enter via Vista Exchange Green or Rochester Drive</p>
-        <ul>
-          <li>Park at Star Vista carpark or alternative carparks nearby</li>
-        </ul>
+      <div class="carpark-counter" data-mode="bus" style="display:none;">
+        <div class="carpark-icon">B</div>
+        <div class="carpark-text">
+          <strong>2 bus stops</strong>
+          within walking distance
+        </div>
       </div>
 
-      <div class="carpark-counter" data-mode="car" style="display:none;">
-        <div class="carpark-icon">P</div>
+      <div class="carpark-counter" data-mode="mrt" style="display:none;">
+        <div class="carpark-icon">M</div>
         <div class="carpark-text">
-          <strong>579 lots</strong>
-          available at 4:30 pm
+          <strong>Buona Vista MRT</strong>
+          directly connected
         </div>
       </div>
     </div>
@@ -1344,16 +1346,15 @@
             const fadeDuration = Math.max(videoDur - fadeStart, 3);
             const fadeSteps = 40;
             const fadeInterval = (fadeDuration * 1000) / fadeSteps;
-            const volumeStep = 0.8 / fadeSteps;
+            const volumeStep = (0.8 - 0.3) / fadeSteps;
 
             setTimeout(() => {
               let step = 0;
               const fader = setInterval(() => {
                 step++;
-                bgMusic.volume = Math.max(0, 0.8 - (volumeStep * step));
+                bgMusic.volume = Math.max(0.3, 0.8 - (volumeStep * step));
                 if (step >= fadeSteps) {
                   clearInterval(fader);
-                  bgMusic.pause();
                 }
               }, fadeInterval);
             }, fadeStart * 1000);
