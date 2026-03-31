@@ -126,7 +126,7 @@
 
   .nav-search:hover .search-input,
   .search-input:focus {
-    width: 240px;
+    width: 320px;
     background: rgba(255,255,255,0.45);
   }
 
@@ -402,14 +402,14 @@
     opacity: 0;
     filter: blur(6px);
     transform: translateX(120px);
-    transition: opacity 1.6s cubic-bezier(0.25, 0.1, 0.25, 1),
-                filter 1.6s cubic-bezier(0.25, 0.1, 0.25, 1),
-                transform 1.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transition: opacity 2.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+                filter 2.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+                transform 2.4s cubic-bezier(0.25, 0.1, 0.25, 1);
   }
 
-  .scroll-reveal-right:nth-child(2) { transition-delay: 0.15s; }
-  .scroll-reveal-right:nth-child(3) { transition-delay: 0.3s; }
-  .scroll-reveal-right:nth-child(4) { transition-delay: 0.45s; }
+  .scroll-reveal-right:nth-child(2) { transition-delay: 0.3s; }
+  .scroll-reveal-right:nth-child(3) { transition-delay: 0.6s; }
+  .scroll-reveal-right:nth-child(4) { transition-delay: 0.9s; }
 
   .scroll-reveal-right.visible {
     opacity: 1;
@@ -438,7 +438,7 @@
      WHAT'S NEW
   ═══════════════════════════════════ */
   .whats-new-title {
-    padding: 80px 48px 32px;
+    padding: 48px 48px 32px;
     text-align: center;
     background: var(--white);
   }
@@ -457,6 +457,30 @@
     padding: 40px 48px 48px;
     position: relative;
     overflow: hidden;
+  }
+
+  /* Mute button */
+  .mute-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 999;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.6);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    backdrop-filter: blur(6px);
+  }
+
+  .mute-btn:hover {
+    background: rgba(0,0,0,0.8);
   }
 
   /* Halftone dot pattern overlay (disabled — solid orange) */
@@ -556,10 +580,9 @@
      ACCESS / GETTING HERE
   ═══════════════════════════════════ */
   .access-section {
-    padding: 120px 0 120px 48px;
     position: relative;
     background: var(--white);
-    overflow: hidden;
+    overflow: clip;
   }
 
   /* Decorative swirl lines in background */
@@ -577,18 +600,25 @@
   }
 
   .access-container {
-    max-width: none;
-    margin: 0;
-    display: grid;
-    grid-template-columns: 35% 1fr;
-    gap: 40px;
-    align-items: center;
     position: relative;
     z-index: 1;
+    display: flex;
+    align-items: stretch;
+    min-height: 600px;
   }
 
   .access-left {
-    margin-left: 75px;
+    flex: 0 0 400px;
+    padding: 130px 40px 80px 120px;
+  }
+
+  .access-map {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
   }
 
   .access-left h2 {
@@ -726,13 +756,10 @@
   }
 
   /* Map image */
-  .access-map {
-    position: relative;
-  }
-
   .access-map img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: contain;
     display: block;
   }
 
@@ -914,9 +941,8 @@
     header { padding: 0 24px; }
     .nav-bar a { padding: 8px 16px; font-size: 11px; letter-spacing: 1px; }
     .tagline-section, .whats-new-band { padding: 60px 24px; }
-    .access-section { padding: 60px 0 60px 24px; }
+    .access-section { padding: 0; }
     .promo-grid { grid-template-columns: repeat(2, 1fr); }
-    .access-container { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1.5fr repeat(2, 1fr); gap: 32px; }
   }
 
@@ -944,8 +970,9 @@
     .whats-new-band { padding: 32px 20px; }
     .promo-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
 
-    .access-section { padding: 48px 20px; }
-    .access-container { grid-template-columns: 1fr; max-width: none; }
+    .access-section { padding: 0; }
+    .access-container { flex-direction: column; }
+    .access-left { flex: none; width: 100%; padding: 48px 20px; }
     .access-left h2 { font-size: 28px; }
 
     .footer-grid {
@@ -1018,7 +1045,7 @@
   }
 </style>
 </head>
-<body class="scroll-locked">
+<body>
 
 <!-- ═══════════ ENTRY SPLASH ═══════════ -->
 <div class="entry-splash" id="entrySplash">
@@ -1067,6 +1094,12 @@
 <!-- Background Music -->
 <audio id="bgMusic" preload="auto" src="../TheStar_Mock_BGM.mp3"></audio>
 
+<!-- Mute Toggle -->
+<button class="mute-btn" id="muteBtn" aria-label="Mute music" style="display:none;">
+  <svg class="mute-icon-on" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/><path d="M15.5 8.5a5 5 0 010 7M18.5 6a9 9 0 010 12"/></svg>
+  <svg class="mute-icon-off" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none;"><polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/><line x1="16" y1="9" x2="22" y2="15"/><line x1="22" y1="9" x2="16" y2="15"/></svg>
+</button>
+
 <!-- ═══════════ HERO ═══════════ -->
 <section class="hero">
   <img class="hero-fallback" src="../Building2.jpg" alt="The Star">
@@ -1100,7 +1133,7 @@
 
 <!-- ═══════════ WHAT'S NEW ═══════════ -->
 <div class="whats-new-title">
-  <h2>What's New</h2>
+  <h2 class="scroll-reveal">What's New</h2>
 </div>
 <section class="whats-new-band">
   <div class="filter-tabs">
@@ -1198,7 +1231,7 @@
         </div>
       </div>
 
-      <div class="carpark-counter" data-mode="taxi" style="display:none;">
+      <div class="carpark-counter" data-mode="taxi" style="display:none; visibility:hidden;">
         <div class="carpark-icon" style="background: #2563eb;">T</div>
         <div class="carpark-text">
           <strong>Taxi Stand F60</strong>
@@ -1206,7 +1239,7 @@
         </div>
       </div>
 
-      <div class="carpark-counter" data-mode="bus" style="display:none;">
+      <div class="carpark-counter" data-mode="bus" style="display:none; visibility:hidden;">
         <div class="carpark-icon" style="background: #2563eb;">B</div>
         <div class="carpark-text">
           <strong>2 bus stops</strong>
@@ -1214,13 +1247,14 @@
         </div>
       </div>
 
-      <div class="carpark-counter" data-mode="mrt" style="display:none;">
+      <div class="carpark-counter" data-mode="mrt" style="display:none; visibility:hidden;">
         <div class="carpark-icon" style="background: #2563eb;">M</div>
         <div class="carpark-text">
           <strong>Buona Vista MRT</strong>
           directly connected
         </div>
       </div>
+
     </div>
 
     <div class="access-map scroll-reveal">
@@ -1309,7 +1343,12 @@
       info.style.display = info.getAttribute('data-mode') === mode ? 'block' : 'none';
     });
     document.querySelectorAll('.carpark-counter').forEach(badge => {
-      badge.style.display = badge.getAttribute('data-mode') === mode ? 'inline-flex' : 'none';
+      const bMode = badge.getAttribute('data-mode');
+      if (bMode === 'car') {
+        badge.style.display = bMode === mode ? 'inline-flex' : 'none';
+      } else {
+        badge.style.display = 'none';
+      }
     });
   }
 
@@ -1351,6 +1390,7 @@
         bgMusic.volume = 0.8;
         bgMusic.currentTime = 0;
         bgMusic.play().then(() => {
+          if (muteBtn) muteBtn.style.display = 'flex';
           if (heroVideo) {
             const videoDur = heroVideo.duration / heroVideo.playbackRate;
             const fadeStart = 9;
@@ -1384,10 +1424,18 @@
       splash.classList.add('fade-out');
       setTimeout(() => splash.remove(), 600);
 
-      // Unlock scrolling after 3 seconds
-      setTimeout(() => {
-        document.body.classList.remove('scroll-locked');
-      }, 5000);
+    });
+  }
+
+  // Mute toggle
+  const muteBtn = document.getElementById('muteBtn');
+  if (muteBtn && bgMusic) {
+    const iconOn = muteBtn.querySelector('.mute-icon-on');
+    const iconOff = muteBtn.querySelector('.mute-icon-off');
+    muteBtn.addEventListener('click', () => {
+      bgMusic.muted = !bgMusic.muted;
+      iconOn.style.display = bgMusic.muted ? 'none' : 'block';
+      iconOff.style.display = bgMusic.muted ? 'block' : 'none';
     });
   }
 
@@ -1406,7 +1454,7 @@
         revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.3, rootMargin: '0px 0px -100px 0px' });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
   document.querySelectorAll('.scroll-reveal, .scroll-reveal-right, .scroll-reveal-label').forEach(el => {
     revealObserver.observe(el);
