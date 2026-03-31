@@ -973,6 +973,10 @@
   /* ═══════════════════════════════════
      ENTRY SPLASH
   ═══════════════════════════════════ */
+  body.scroll-locked {
+    overflow: hidden;
+  }
+
   .entry-splash {
     position: fixed;
     inset: 0;
@@ -1010,7 +1014,7 @@
   }
 </style>
 </head>
-<body>
+<body class="scroll-locked">
 
 <!-- ═══════════ ENTRY SPLASH ═══════════ -->
 <div class="entry-splash" id="entrySplash">
@@ -1367,6 +1371,11 @@
       // Fade out splash
       splash.classList.add('fade-out');
       setTimeout(() => splash.remove(), 600);
+
+      // Unlock scrolling after 3 seconds
+      setTimeout(() => {
+        document.body.classList.remove('scroll-locked');
+      }, 3000);
     });
   }
 
